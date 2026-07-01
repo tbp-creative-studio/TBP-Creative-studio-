@@ -1,1 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBP AI v3.1 Professional</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <!-- App Container -->
+    <div class="app-container" id="appContainer">
+        
+        <!-- Auth Screen (Login System) -->
+        <div class="auth-screen" id="authScreen">
+            <div class="auth-card">
+                <div class="auth-logo">
+                    <i class="fa-solid fa-microchip-ai"></i>
+                    <h2>TBP AI v3.1</h2>
+                    <p>Professional Assistant</p>
+                </div>
+                <form id="loginForm" class="auth-form">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="loginUsername" placeholder="Username" required autocomplete="username">
+                    </div>
+                    Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+                      <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <span>Sign In</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
 
+        <!-- Main Workspace Container -->
+        <div class="workspace" id="workspace" style="display: none;">
+            
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <div class="brand">
+                        <i class="fa-solid fa-microchip-ai"></i>
+                        <span>TBP AI v3.1</span>
+                    </div>
+                    <button id="closeSidebarBtn" class="btn-icon mobile-only" aria-label="Close Sidebar">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <button id="newChatBtn" class="btn btn-primary btn-new-chat">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>New Chat</span>
+                </button>
+
+                <div class="search-history-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchChatInput" placeholder="Search chats...">
+                </div>
+
+                <div class="chat-history-list" id="chatHistoryList">
+                    <!-- History items will be dynamically injected here -->
+                </div>
+
+                <div class="sidebar-footer">
+                    <button id="profileTrigger" class="profile-card">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="User Avatar" id="sidebarAvatar">
+                        <div class="profile-info">
+                            <span class="profile-name" id="sidebarUsername">User</span>
+                            <span class="profile-status">Professional</span>
+                        </div>
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Chat Area -->
+            <main class="chat-area">
+                <!-- Sticky Header -->
+                <header class="chat-header">
+                    <div class="header-left">
+                        <button id="toggleSidebarBtn" class="btn-icon" aria-label="Toggle Sidebar">
+                            <i class="fa-solid fa-bars-staggered"></i>
+                        </button>
+                        <h1 class="chat-title" id="currentChatTitle">New Chat</h1>
+                    </div>
+                    <div class="header-right">
+                        <button id="themeToggleBtn" class="btn-icon" aria-label="Toggle Theme">
+                            <i class="fa-solid fa-moon"></i>
+                        </button>
+                        <button id="wallpaperToggleBtn" class="btn-icon" aria-label="Wallpaper Options">
+                            <i class="fa-solid fa-image"></i>
+                        </button>
+                        <button id="settingsToggleBtn" class="btn-icon" aria-label="Settings">
+                            <i class="fa-solid fa-gear"></i>
+                        </button>
+                        <button id="exportChatBtn" class="btn-icon" aria-label="Export Chat">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                        <button id="logoutBtn" class="btn-icon text-danger" aria-label="Logout">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Conversation Container -->
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Welcome View -->
+                    <div class="welcome-container" id="welcomeContainer">
+                        <div class="welcome-icon">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h2>How can I assist you today?</h2>
+                        <p>TBP AI v3.1 Professional is ready for advanced tasks, file analysis, and core generation.</p>
+                    </div>
+                </div>
+
+                <!-- Sticky Bottom Control Panel & Input -->
+                <footer class="chat-input-area">
+                    <!-- Dropzone/Preview Zone -->
+                    <div class="file-preview-bar" id="filePreviewBar" style="display: none;">
+                        <!-- Dynamically populated file slots -->
+                    </div>
+
+                    <div class="input-container-wrapper" id="dropZone">
+                        <div class="drag-overlay" id="dragOverlay">
+                            <div class="drag-message">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <p>Drop files here to analyze</p>
+                            </div>
+                        </div>
+
+                        <div class="input-controls-left">
+                            <label for="fileUploadInput" class="btn-icon" title="Upload Image/PDF">
+                                <i class="fa-solid fa-paperclip"></i>
+                                <input type="file" id="fileUploadInput" accept="image/*,.pdf" multiple style="display: none;">
+                            </label>
+                            <button id="cameraBtn" class="btn-icon" title="Take Photo">
+                                <i class="fa-solid fa-camera"></i>
+                            </button>
+                        </div>
+
+                        <textarea id="chatInput" rows="1" placeholder="Message TBP AI..." autocomplete="off"></textarea>
+
+                        <div class="input-controls-right">
+                            <button id="voiceInputBtn" class="btn-icon" title="Voice Dictation">
+                                <i class="fa-solid fa-microphone"></i>
+                            </button>
+                            <button id="stopGenerationBtn" class="btn-icon text-danger" title="Stop Generation" style="display: none;">
+                                <i class="fa-solid fa-stop"></i>
+                            </button>
+                            <button id="sendMessageBtn" class="btn-icon btn-send" title="Send Message">
+                                <i class="fa-solid fa-arrow-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                </footer>
+            </main>
+
+            <!-- Floating Panels/Modals -->
+            <!-- Profile Panel -->
+            <div class="modal-overlay" id="profileModal" style="display: none;">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h3>Profile Settings</h3>
+                        <button class="btn-icon close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="profile-setup-zone">
+                            <div class="avatar-edit-wrapper">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Profile" id="modalAvatarPreview">
+                                <label for="avatarUploadInput" class="avatar-edit-badge">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <input type="file" id="avatarUploadInput" accept="image/*" style="display: none;">
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label for="profileUsernameInput">Display Name</label>
+                                <input type="text" id="profileUsernameInput" placeholder="Enter username">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="saveProfileBtn" class="btn btn-primary">Save Profile</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Panel -->
+            <div class="modal-overlay" id="settingsModal" style="display: none;">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h3>System Configuration</h3>
+                        <button class="btn-icon close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <h4>API Gateway Connection</h4>
+                                <p>Provide endpoint URL for Custom LLM calls.</p>
+                            </div>
+                            <input type="text" id="apiEndpointInput" class="form-control" value="https://api.openai.com/v1/chat/completions">
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <h4>Bearer Security Token</h4>
+                                <p>Stored locally to pass authorization.</p>
+                            </div>
+                            <input type="password" id="apiKeyInput" class="form-control" placeholder="sk-...">
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <h4>Speech Synthesis (TTS)</h4>
+                                <p>Enable automatic reading of text generation.</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="ttsToggleInput">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wallpaper Selector Modal -->
+            <div class="modal-overlay" id="wallpaperModal" style="display: none;">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h3>Interface Canvas Themes</h3>
+                        <button class="btn-icon close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="wallpaper-grid">
+                            <div class="wallpaper-item default" data-wp="none">
+                                <div class="wp-preview-box plain"></div>
+                                <span>Default Minimal</span>
+                            </div>
+                            <div class="wallpaper-item" data-wp="cyber">
+                                <div class="wp-preview-box cyber-bg"></div>
+                                <span>Cyber Mesh</span>
+                            </div>
+                            <div class="wallpaper-item" data-wp="nebula">
+                                <div class="wp-preview-box nebula-bg"></div>
+                                <span>Deep Nebula</span>
+                            </div>
+                        </div>
+                        <div class="custom-wp-upload">
+                            <label for="customWallpaperInput" class="btn btn-secondary btn-block">
+                                <i class="fa-solid fa-upload"></i> Upload Custom Wallscape
+                            </label>
+                            <input type="file" id="customWallpaperInput" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Camera Modal -->
+            <div class="modal-overlay" id="cameraModal" style="display: none;">
+                <div class="modal-card video-card">
+                    <div class="modal-header">
+                        <h3>Camera Input</h3>
+                        <button class="btn-icon close-modal" id="stopCameraBtn"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body video-body">
+                        <video id="cameraVideo" autoplay playsinline></video>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="capturePhotoBtn" class="btn btn-primary btn-block">
+                            <i class="fa-solid fa-camera"></i> Capture Snap
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+                  </html>
+  
